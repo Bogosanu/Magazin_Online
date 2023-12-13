@@ -1,0 +1,191 @@
+﻿@model ArticlesApp.Models.Product
+
+
+@* Afisarea unui produs impreuna cu categoria din care face *@
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<br />
+
+<div class="card">
+
+    @Html.Partial("ProductInfo", Model) 
+
+    @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+    {
+        <div class="d-flex flex-row justify-content-between p-3 border-1 border-top">
+
+            <a class="btn btn-success" href="/Products/Edit/@Model.Id">Editeaza produs</a>
+
+            <form method="post" action="/Products/Delete/@Model.Id">
+
+                <button class="btn btn-danger" type="submit">Sterge produs</button>
+
+            </form>
+
+        </div>
+    }
+
+    <form method="post" asp-controller="Products" asp-action="AddBasket">
+        <input type="hidden" name="ProductId" value="@Model.Id" />
+        <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
+            <div>
+                <select name="BasketId" class="form-control">
+                    <option selected>Adauga acest produs in cos</option>
+                    @foreach (var basket in ViewBag.UserBaskets)
+                    {
+                        <option value="@basket.Id">"Cosul meu"</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-success alert-success" value="+" />
+            </div>
+        </div>
+    </form>
+</div>
+
+    
+
+    <partial name="ProductInfo" model="Model"></partial> 
+
+    @*
+
+    * Partialul inlocuieste secventa de cod comentata
+    * Secventa a fost mutata in partialul ArticleInfo
+    * Partial care este apelat
+
+    <div class="card-body">
+
+        <h3 class="card-title alert-success py-3 px-3 rounded-2">@Model.Title</h3>
+
+        <div class="card-text">@Model.Content</div>
+
+        <div class="d-flex justify-content-between flex-row mt-5">
+
+            <div><i class="bi bi-globe"></i> @Model.Category.CategoryName</div>
+
+            <span class="alert-success">@Model.Date</span>
+
+        </div>
+
+    </div>
+    *@
+
+    
+
+<br />
+<br />
+
+@* Afisare reviewuri impreuna cu butoanele de editare si stergere *@
+
+@foreach (var rev in Model.Reviews)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+
+                <div>
+
+                    <p>@rev.Content</p>
+                    <p>@rev.Points</p>
+                    <small>@rev.Date</small>
+                    <strong><i class="bi bi-person"></i>@rev.User.UserName</strong>
+
+                </div>
+                <br>
+
+
+                    @if (rev.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                    {
+
+                        <div class="d-flex">
+
+                            <div>
+
+                                <a class="btn btn-outline-primary" href="/Reviews/Edit/@rev.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+
+                            </div>
+
+                            <div>
+
+                                <form method="post" action="/Reviews/Delete/@rev.Id">
+
+                                    <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+                    }
+
+                <br />
+
+            </div>
+
+            <div class="col-md-2"></div>
+
+        </div>
+
+    </div>
+}
+
+
+@* Afisarea formularului in care se poate adauga un comentariu *@
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+                
+                <form method="post" action="/Products/Show/@Model.Id">
+
+                    <div class="card-body">
+
+                        <input type="hidden" name="ProductId" value="@Model.Id" />
+
+                        <label>Continut review</label>
+                        <br />
+
+                        <textarea class="form-control" name="Content"></textarea>
+
+                        @Html.ValidationMessage("Content", null, new { @class = "text-danger"})
+
+                        <label>Rating: </label>
+                        <br />
+
+                        <textarea class="form-control" name="Points"></textarea>
+
+                        @Html.ValidationMessage("Points", null, new { @class = "text-danger"})
+
+
+                        <br /><br />
+
+                        <button class="btn btn-success " type="submit">Adauga review</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+</div>

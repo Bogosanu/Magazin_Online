@@ -1,0 +1,46 @@
+﻿<br />
+<br />
+
+
+<br />
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<br />
+
+<a class="btn btn-success rounded-pill mb-5" href="/Baskets/New">
+    <i class="bi bi-plus"></i> Adaugare cos de cumparaturi
+</a>
+
+
+<div class="row">
+
+    @foreach (var basket in ViewBag.Baskets)
+    {
+        <div class="col-4 mb-4">
+
+            <div class="card">
+
+                <div class="card-body">
+                    
+                    <h5 class="card-title" name="Name">Cosul meu</h5>
+
+                        @if (ViewBag.EsteAdmin)
+                        {
+                            <div><i class="bi bi-person"> Creat de: </i> @basket.User.UserName</div>
+                        }        
+
+                    <br />
+
+                    <a class="btn alert-success" href="/Baskets/Show/@basket.Id">Afisare cos de cumparaturi</a>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

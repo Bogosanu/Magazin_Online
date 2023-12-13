@@ -1,0 +1,23 @@
+﻿@model ArticlesApp.Models.Basket
+
+<br />
+
+<h2 class= "mb-5 text-center">Adaugare cos de cumparaturi</h2>
+
+<br />
+
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Baskets", method: FormMethod.Post))
+{
+
+    @Html.Label("Cosul meu")
+    <br />
+
+    @Html.ValidationMessageFor(m => m.Id, null, new { @class = "text-danger" })
+    <br />
+    <br />
+
+    <button class="btn btn-success" type="submit">Creaza cos</button>
+
+}
+

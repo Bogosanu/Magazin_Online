@@ -1,0 +1,35 @@
+﻿@model ArticlesApp.Models.Basket
+
+<div class="row">
+
+    <div class="col-12">
+        <h5 class="card-title" name="Name">"Cosul meu"</h5>
+        @if (ViewBag.EsteAdmin)
+        {
+            <i class="bi bi-person"> Creat de: </i> @Model.User.UserName
+
+        }
+        
+        <br />
+        <br />
+        Produse in colectie:
+        <br /><br />
+    </div>
+
+    @if(Model.ProductBaskets.Count > 0)
+    @foreach (var productBasket in Model.ProductBaskets)
+    {
+        <div class="col-12">
+            <div class="card" style="width: 100%;">
+            @*<img src="..." class="card-img-top" alt="..."> *@
+
+                <div class="card-body">
+
+                    @Html.Partial("ProductInfo", productBasket.Product)
+
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
