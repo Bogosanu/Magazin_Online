@@ -30,24 +30,27 @@
 
         </div>
     }
-
-    <form method="post" asp-controller="Products" asp-action="AddBasket">
-        <input type="hidden" name="ProductId" value="@Model.Id" />
+    @using System.Linq
+@{
+   var hasBaskets = ViewBag.UserBaskets != null && ViewBag.UserBaskets.Count > 0;
+   var firstBasketId = hasBaskets ? ViewBag.UserBaskets[0].Id : 0;
+}
+<form method="post" asp-controller="Products" asp-action="AddBasket">
+    <input type="hidden" name="ProductId" value="@Model.Id" />
+    @if (hasBaskets)
+    {
+        <input type="hidden" name="BasketId" value="@firstBasketId" />
         <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
-            <div>
-                <select name="BasketId" class="form-control">
-                    <option selected>Adauga acest produs in cos</option>
-                    @foreach (var basket in ViewBag.UserBaskets)
-                    {
-                        <option value="@basket.Id">"Cosul meu"</option>
-                    }
-                </select>
-            </div>
-            <div>
-                <input type="submit" class="btn btn-success alert-success" value="+" />
-            </div>
+            <input type="submit" class="btn btn-success alert-success" value="Adauga in cos" />
         </div>
-    </form>
+    }
+    else
+    {
+        <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
+            <a href="@Url.Action("New", "Baskets")" class="btn btn-primary">Creeaza cosul de cumparaturi</a>
+        </div>
+    }
+</form>
 </div>
 
     

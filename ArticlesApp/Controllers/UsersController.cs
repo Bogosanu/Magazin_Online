@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ArticlesApp.Controllers
 {
@@ -124,15 +125,10 @@ namespace ArticlesApp.Controllers
                 }
             }
 
-            // Delete user baskets
-            if (user.Baskets.Count > 0)
-            {
-                foreach (var basket in user.Baskets)
-                {
-                    db.Baskets.Remove(basket);
-                }
-            }
-
+            // Delete user basket
+            if (user.Baskets != null)
+                db.Baskets.Remove(user.Baskets);
+                
             // Delete user products
             if (user.Products.Count > 0)
             {
@@ -168,5 +164,7 @@ namespace ArticlesApp.Controllers
             }
             return selectList;
         }
+
+    
     }
 }

@@ -13,14 +13,17 @@
 
 <br />
 
-<a class="btn btn-success rounded-pill mb-5" href="/Baskets/New">
-    <i class="bi bi-plus"></i> Adaugare cos de cumparaturi
-</a>
+@if(ViewBag.Baskets == null){
+    <a class="btn btn-success rounded-pill mb-5" href="/Baskets/New">
+            <i class="bi bi-plus"></i> Creeaza cosul de cumparaturi
+    </a>
+}
 
 
 <div class="row">
-
-    @foreach (var basket in ViewBag.Baskets)
+ @if(ViewBag.Baskets != null)
+    {
+    foreach (var basket in ViewBag.Baskets)
     {
         <div class="col-4 mb-4">
 
@@ -41,6 +44,7 @@
                 </div>
             </div>
         </div>
+    }
     }
 
 </div>

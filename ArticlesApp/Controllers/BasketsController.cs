@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ArticlesApp.Controllers
 {
@@ -49,8 +50,10 @@ namespace ArticlesApp.Controllers
                 var baskets = from basket in db.Baskets.Include("User")
                                .Where(b => b.UserId == _userManager.GetUserId(User))
                                 select basket;
-
-                ViewBag.Baskets = baskets;
+                if (baskets.Any()) 
+                    ViewBag.Baskets = baskets;
+                else
+                    ViewBag.Baskets = null;
 
                 return View();
             }
@@ -69,7 +72,7 @@ namespace ArticlesApp.Controllers
             {
                 TempData["message"] = "Nu aveti drepturi asupra cosului de cumparaturi";
                 TempData["messageType"] = "alert-danger";
-                return RedirectToAction("Index", "Articles");
+                return RedirectToAction("Index", "Products");
             }
 
         }
@@ -143,13 +146,22 @@ namespace ArticlesApp.Controllers
         public ActionResult New(Basket bs)
         {
             bs.UserId = _userManager.GetUserId(User);
+            var user = db.Users
+                         .Include("Baskets")
+                         .Where(u => u.Id == bs.UserId)
+                         .First();
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && user.Baskets == null)
             {
                 db.Baskets.Add(bs);
                 db.SaveChanges();
                 TempData["message"] = "Cosul a fost adaugat";
                 TempData["messageType"] = "alert-success";
+                return RedirectToAction("Index");
+            }
+
+            else if (user.Baskets != null)
+            {
                 return RedirectToAction("Index");
             }
 
@@ -174,5 +186,7 @@ namespace ArticlesApp.Controllers
 
             ViewBag.UserCurent = _userManager.GetUserId(User);
         }
+
+      
     }
 }

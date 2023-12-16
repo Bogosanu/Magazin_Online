@@ -16,7 +16,7 @@ namespace ArticlesApp.Models
         public virtual ICollection<Product>? Products { get; set; }
 
         // un user poate sa creeze mai multe cosuri?(schimbam)
-        public virtual ICollection<Basket>? Baskets { get; set; }
+        public virtual Basket Baskets { get; set; }
 
         // atribute suplimentare adaugate pentru user
         public string? FirstName { get; set; }

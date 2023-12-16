@@ -72,10 +72,10 @@ namespace ArticlesApp.Controllers
                                          .Include("User")
                                          .Include("Reviews")
                                          .Include("Reviews.User")
-                                         .Where(art => art.Id == id)
+                                         .Where(prod => prod.Id == id)
                                          .First();
 
-            // Adaugam bookmark-urile utilizatorului pentru dropdown
+            
             ViewBag.UserBaskets = db.Baskets
                                       .Where(b => b.UserId == _userManager.GetUserId(User))
                                       .ToList();
@@ -119,7 +119,7 @@ namespace ArticlesApp.Controllers
                                          .First();
 
 
-                // Adaugam bookmark-urile utilizatorului pentru dropdown
+                
                 ViewBag.UserBaskets = db.Baskets
                                           .Where(b => b.UserId == _userManager.GetUserId(User))
                                           .ToList();
