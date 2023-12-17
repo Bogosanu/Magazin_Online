@@ -296,7 +296,14 @@ namespace ArticlesApp.Controllers
                                          .First();
 
             if (product.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
-            {
+            {   
+                if (product.Reviews.Count > 0)
+                {
+                    foreach (var rev in product.Reviews)
+                    {
+                        db.Reviews.Remove(rev);
+                    }
+                }
                 db.Products.Remove(product);
                 db.SaveChanges();
                 TempData["message"] = "Produsul a fost sters";
