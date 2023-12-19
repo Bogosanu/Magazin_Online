@@ -23,7 +23,9 @@
 
                 // pret
 
-                @Html.TextBox("Title", "pret", new { @class = "form-control" })
+                @Html.Label("Pret", "Pret")
+                <br />
+                @Html.TextBox("Pret", null, new { @class = "form-control" })
 
                 @Html.ValidationMessageFor(m => m.pret, "", new { @class = "text-danger" })
                 <br />
