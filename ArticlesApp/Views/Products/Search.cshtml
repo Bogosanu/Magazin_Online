@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Search";
+
+    var searchQuery = ViewBag.SearchQuery as string;
+
+    var order = ViewBag.order as string;
+}
+<br />
+
+<h2 class="text-center">Afisare produse</h2>
+
+<br />
+
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<br />
+
+
+@foreach (ArticlesApp.Models.Product product in ViewBag.Products)
+{
+    <div class="card">
+
+        @Html.Partial("ProductInfo", product)
+
+        <a class="btn btn-success" href="/Products/Show/@product.Id">Afisare produs</a>
+
+    </div>
+
+}
+
+@if (order == "asc")
+{
+    <button type="submit" form="sortForm" class="btn btn-primary">Sort by Price (Desc)</button>
+
+    <form id="sortForm" method="get" action="@Url.Action("Search", "Products")">
+        <input type="hidden" name="searchQuery" value="@searchQuery" />
+        <input type="hidden" name="order" value="desc" />
+    </form>
+}
+else
+{
+    <button type="submit" form="sortForm" class="btn btn-primary">Sort by Price (Asc)</button>
+
+    <form id="sortForm" method="get" action="@Url.Action("Search", "Products")">
+        <input type="hidden" name="searchQuery" value="@searchQuery" />
+        <input type="hidden" name="order" value="asc" />
+    </form>
+}

@@ -8,7 +8,7 @@
         <div class="col-6 offset-3"> 
 
             @using (Html.BeginForm(actionName: "New", controllerName: "Products",
-            method: FormMethod.Post))
+            method: FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
 
                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })  
@@ -19,6 +19,16 @@
 
                 @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
                 <br /><br />
+
+
+                // pret
+
+                @Html.TextBox("Title", "pret", new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(m => m.pret, "", new { @class = "text-danger" })
+                <br />
+
+                <br />
 
                 @Html.Label("Description", "Descriere produs: ")
                 <br />

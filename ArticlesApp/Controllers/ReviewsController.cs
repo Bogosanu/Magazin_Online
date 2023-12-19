@@ -32,6 +32,12 @@ namespace ArticlesApp.Controllers
             _roleManager = roleManager;
         }
 
+
+        public IActionResult Show(int id)
+        {
+            return View();
+        }
+
         
         
         // Adaugarea unui comentariu asociat unui articol in baza de date

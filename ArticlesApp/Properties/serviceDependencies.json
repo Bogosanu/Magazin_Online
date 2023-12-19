@@ -7,6 +7,11 @@
     "mssql2": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:Magazin_Online"
+    },
+    "mssql3": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:MagazinDB",
+      "dynamicId": null
     }
   }
 }

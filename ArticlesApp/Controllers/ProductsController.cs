@@ -43,6 +43,40 @@ namespace ArticlesApp.Controllers
         // Pentru fiecare produs se afiseaza si userul care a postat produsul respectiv
         // HttpGet implicit
         [Authorize(Roles = "User,Collaborator,Admin")]
+
+
+        public IActionResult Search(string searchQuery, string? order)
+        {
+
+
+            var products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery));
+
+
+
+            if (order == "asc")
+            {
+                products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery)).OrderBy(p => p.pret);
+            }
+
+            if (order == "desc")
+            {
+                products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery)).OrderByDescending(p => p.pret);
+            }
+
+            ViewBag.Products = products;
+
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.Message = TempData["message"];
+                ViewBag.Alert = TempData["messageType"];
+            }
+
+            ViewBag.searchQuery = searchQuery;
+            ViewBag.order = order;
+
+            return View();
+        }
+
         public IActionResult Index()
         {
             var products = db.Products.Include("Category").Include("User");
@@ -91,6 +125,9 @@ namespace ArticlesApp.Controllers
 
             return View(product);
         }
+
+
+
 
 
         // Adaugarea unui review asociat unui articol in baza de date
@@ -195,6 +232,8 @@ namespace ArticlesApp.Controllers
         {
             product.Date = DateTime.Now;
 
+            //IFormFile file = Request.Files["ImageData"];
+
             // preluam id-ul utilizatorului care posteaza articolul
             product.UserId = _userManager.GetUserId(User);
 
@@ -212,6 +251,7 @@ namespace ArticlesApp.Controllers
                 return View(product);
             }
         }
+
 
         // Se editeaza un articol existent in baza de date impreuna cu categoria din care face parte
         // Categoria se selecteaza dintr-un dropdown

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,7 +19,13 @@ namespace ArticlesApp.Models
         [Required(ErrorMessage = "Continutul articolului este obligatoriu")]
         public string Description { get; set; }
 
+        public int pret { get; set; }
+
         public DateTime Date { get; set; }
+
+        // aici poza SPER POATE IN VIITOR
+        //public byte[]? Photo { get; set; }
+
 
         [Required(ErrorMessage = "Categoria este obligatorie")]
         // un articol are asociata o categorie

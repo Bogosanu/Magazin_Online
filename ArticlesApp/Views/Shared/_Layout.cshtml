@@ -23,6 +23,23 @@
 
                     <ul class="navbar-nav flex-grow-1">
 
+                        <li class="nav-item">
+                            
+                             <!-- listen for enter -->
+
+                            
+                            @using (Html.BeginForm("Search", "Products", FormMethod.Get, new { id = "searchForm" }))
+                            {
+                                <div>
+                                    <label for="searchQuery">Search:</label>
+                                    <input type="text" id="searchQuery" name="searchQuery" />
+                                    <button type="submit">Search</button>
+                                </div>
+                            }
+                            
+
+                        </li>
+
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -97,3 +114,17 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+@section Scripts {
+    <script>
+        // Capture the keypress event for the search input
+        $('#searchQuery').keypress(function (e) {
+            if (e.which === 13) {
+                // If the pressed key is Enter, submit the form
+                $('#searchForm').submit();
+                return false;
+            }
+        });
+    </script>
+}
