@@ -1,0 +1,27 @@
+﻿.star-rating {
+    font-size: 0; /* Remove extra space between inline-block elements */
+}
+
+    .star-rating .star {
+        font-size: 30px; 
+        color: gold; 
+        cursor: pointer;
+        display: inline-block;
+      
+    }
+
+    .star-rating .star_unclickable {
+        font-size: 30px; /* Size of stars */
+        color: gold; /* Default star color (grey) */
+        cursor: pointer;
+        display: inline-block;
+
+    }
+
+        .star-rating .star.rated {
+            color: gold; 
+        }
+
+        
+
+

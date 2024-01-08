@@ -143,6 +143,13 @@ namespace ArticlesApp.Controllers
             {
                 db.Reviews.Add(rev);
                 db.SaveChanges();
+                var reviews = db.Reviews.Where(r => r.ProductId == rev.ProductId).ToList();
+                double averageRating = reviews.Average(r => r.Points);
+
+                var product = db.Products.Find(rev.ProductId);
+                product.Rating = averageRating;
+        
+                db.SaveChanges();
                 return Redirect("/Products/Show/" + rev.ProductId);
             }
 
@@ -236,6 +243,7 @@ namespace ArticlesApp.Controllers
 
             // preluam id-ul utilizatorului care posteaza articolul
             product.UserId = _userManager.GetUserId(User);
+            product.Rating = 0;
 
             if (ModelState.IsValid)
             {

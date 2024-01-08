@@ -21,6 +21,8 @@ namespace ArticlesApp.Models
 
         public int pret { get; set; }
 
+        public double Rating { get; set; }
+
         public DateTime Date { get; set; }
 
         // aici poza SPER POATE IN VIITOR
