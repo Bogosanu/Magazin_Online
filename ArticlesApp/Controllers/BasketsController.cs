@@ -138,7 +138,8 @@ namespace ArticlesApp.Controllers
         [Authorize(Roles = "User,Collaborator,Admin")]
         public IActionResult New()
         {
-            return View();
+            Basket bs = new Basket();
+            return New(bs);
         }
 
         [HttpPost]
@@ -147,11 +148,11 @@ namespace ArticlesApp.Controllers
         {
             bs.UserId = _userManager.GetUserId(User);
             var user = db.Users
-                         .Include("Baskets")
+                         .Include("Basket")
                          .Where(u => u.Id == bs.UserId)
                          .First();
 
-            if (ModelState.IsValid && user.Baskets == null)
+            if (ModelState.IsValid && user.Basket == null)
             {
                 db.Baskets.Add(bs);
                 db.SaveChanges();
@@ -160,15 +161,12 @@ namespace ArticlesApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            else if (user.Baskets != null)
+            else 
             {
                 return RedirectToAction("Index");
             }
 
-            else
-            {
-                return View(bs);
-            }
+           
         }
 
 

@@ -112,7 +112,7 @@ namespace ArticlesApp.Controllers
             var user = db.Users
                          .Include("Products")
                          .Include("Reviews")
-                         .Include("Baskets")
+                         .Include("Basket")
                          .Where(u => u.Id == id)
                          .First();
 
@@ -126,8 +126,8 @@ namespace ArticlesApp.Controllers
             }
 
             // Delete user basket
-            if (user.Baskets != null)
-                db.Baskets.Remove(user.Baskets);
+            if (user.Basket != null)
+                db.Baskets.Remove(user.Basket);
                 
             // Delete user products
             if (user.Products.Count > 0)

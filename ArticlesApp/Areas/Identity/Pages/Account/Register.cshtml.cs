@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ArticlesApp.Data;
 
 namespace ArticlesApp.Areas.Identity.Pages.Account
 {
@@ -30,9 +31,11 @@ namespace ArticlesApp.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext db;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
+            ApplicationDbContext context,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
@@ -44,6 +47,7 @@ namespace ArticlesApp.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            db = context;
         }
 
         /// <summary>
@@ -106,7 +110,7 @@ namespace ArticlesApp.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
-
+ 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -114,6 +118,8 @@ namespace ArticlesApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                
+
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -122,6 +128,16 @@ namespace ArticlesApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    Basket bs = new Basket();
+                    bs.UserId = user.Id;
+
+
+                    if (ModelState.IsValid && user.Basket == null)
+                    {
+                        db.Baskets.Add(bs);
+                        db.SaveChanges();
+                    }
 
 
                     // PASUL 9 - useri si roluri (adaugarea rolului la inregistrare)
