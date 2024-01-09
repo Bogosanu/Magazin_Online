@@ -130,7 +130,7 @@ namespace ArticlesApp.Controllers
 
 
 
-        // Adaugarea unui review asociat unui articol in baza de date
+        // Adaugarea unui review asociat unui produs in baza de date
         // Toate rolurile pot adauga reviewuri in baza de date
         [HttpPost]
         [Authorize(Roles = "User,Collaborator,Admin")]

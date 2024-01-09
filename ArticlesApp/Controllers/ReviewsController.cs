@@ -40,7 +40,7 @@ namespace ArticlesApp.Controllers
 
         
         
-        // Adaugarea unui comentariu asociat unui articol in baza de date
+        // Adaugarea unui review asociat unui produs in baza de date
         [HttpPost]
         public IActionResult New(Review rev)
         {
@@ -49,6 +49,13 @@ namespace ArticlesApp.Controllers
             if(ModelState.IsValid)
             {
                 db.Reviews.Add(rev);
+                db.SaveChanges();
+                var reviews = db.Reviews.Where(r => r.ProductId == rev.ProductId).ToList();
+                double averageRating = reviews.Average(r => r.Points);
+
+                var product = db.Products.Find(rev.ProductId);
+                product.Rating = averageRating;
+
                 db.SaveChanges();
                 return Redirect("/Products/Show/" + rev.ProductId);
             }
@@ -64,9 +71,9 @@ namespace ArticlesApp.Controllers
         
 
 
-        // Stergerea unui comentariu asociat unui articol din baza de date
-        // Se poate sterge comentariul doar de catre userii cu rolul Admin
-        // sau de catre userii cu rolul User sau Collaborator doar daca comentariul 
+        // Stergerea unui review asociat unui produs din baza de date
+        // Se poate sterge reviewul doar de catre userii cu rolul Admin
+        // sau de catre userii cu rolul User sau Collaborator doar daca reviewul
         // a fost lasat de acestia
         [HttpPost]
         [Authorize(Roles = "User,Collaborator,Admin")]
@@ -77,6 +84,19 @@ namespace ArticlesApp.Controllers
             if (rev.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
                 db.Reviews.Remove(rev);
+                db.SaveChanges();
+                var reviews = db.Reviews.Where(r => r.ProductId == rev.ProductId).ToList();
+                if (reviews.Count != 0)
+                {
+                    double averageRating = reviews.Average(r => r.Points);
+                    var product = db.Products.Find(rev.ProductId);
+                    product.Rating = averageRating;
+                }
+                else
+                {
+                    var product = db.Products.Find(rev.ProductId);
+                    product.Rating = 0;
+                }
                 db.SaveChanges();
                 return Redirect("/Products/Show/" + rev.ProductId);
             }
@@ -89,12 +109,7 @@ namespace ArticlesApp.Controllers
             }
         }
 
-        // In acest moment vom implementa editarea intr-o pagina View separata
-        // Se editeaza un comentariu existent
-        // Editarea unui comentariu asociat unui articol din baza de date
-        // Se poate edita comentariul doar de catre userii cu rolul Admin
-        // sau de catre userii cu rolul User sau Collaborator doar daca comentariul 
-        // a fost lasat de acestia
+        
         [Authorize(Roles = "User,Collaborator,Admin")]
         public IActionResult Edit(int id)
         {
@@ -129,6 +144,20 @@ namespace ArticlesApp.Controllers
 
                     db.SaveChanges();
 
+                    var reviews = db.Reviews.Where(r => r.ProductId == rev.ProductId).ToList();
+
+                    if (reviews.Count != 0)
+                    {
+                        double averageRating = reviews.Average(r => r.Points);
+                        var product = db.Products.Find(rev.ProductId);
+                        product.Rating = averageRating;
+                    }
+                    else
+                    {
+                        var product = db.Products.Find(rev.ProductId);
+                        product.Rating = 0;
+                    }
+                    db.SaveChanges();
                     return Redirect("/Products/Show/" + rev.ProductId);
                 }
                 else
