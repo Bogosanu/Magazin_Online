@@ -30,21 +30,24 @@
                 @Html.ValidationMessageFor(m => m.pret, "", new { @class = "text-danger" })
                 <br />
 
-                <br />
-
                 @Html.Label("Description", "Descriere produs: ")
                 <br />
                 @Html.TextArea("Description", null, new { @class = "form-control" })
 
                 @Html.ValidationMessage("Description", null, new { @class = "text-danger" })
-                <br /><br />
+                <br />
 
                 <label>Selectati categoria</label>
                 @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
                 "Selectati categoria", new { @class = "form-control" })
 
                 @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
-                <br /><br />
+                <br />
+
+                <label for="Photo">Select Photo:</label>
+                <input type="file" name="Image" id="Image"/>
+                <br />
+
 
                 <button class="btn btn-success" type="submit">Adauga produs</button>
             

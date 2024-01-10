@@ -25,8 +25,7 @@ namespace ArticlesApp.Models
 
         public DateTime Date { get; set; }
 
-        // aici poza SPER POATE IN VIITOR
-        //public byte[]? Photo { get; set; }
+        public string? Image { get; set; }
 
 
         [Required(ErrorMessage = "Categoria este obligatorie")]

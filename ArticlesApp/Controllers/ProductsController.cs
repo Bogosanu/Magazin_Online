@@ -25,17 +25,19 @@ namespace ArticlesApp.Controllers
 
         private readonly RoleManager<IdentityRole> _roleManager;
 
+        private IWebHostEnvironment _env;
+
         public ProductsController(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager
+            RoleManager<IdentityRole> roleManager,
+            IWebHostEnvironment env
             )
         {
             db = context;
-
             _userManager = userManager;
-
             _roleManager = roleManager;
+            _env = env;
         }
 
         // Se afiseaza lista tuturor produselor impreuna cu categoria 
@@ -230,16 +232,34 @@ namespace ArticlesApp.Controllers
             return View(product);
         }
 
+
         // Se adauga articolul in baza de date
         // Doar utilizatorii cu rolul de Collaborator sau Admin pot adauga articole in platforma
 
+
         [Authorize(Roles = "Collaborator,Admin")]
         [HttpPost]
-        public IActionResult New(Product product)
+        public async Task<IActionResult> New(Product product, IFormFile Image)
         {
-            product.Date = DateTime.Now;
+            if (Image.Length > 0)
+            {
+                var storagePath = Path.Combine(
+                    _env.WebRootPath,
+                    "images",
+                    Image.FileName
+                );
 
-            //IFormFile file = Request.Files["ImageData"];
+                var databaseFileName = "/images/" + Image.FileName;
+
+                using (var fileStream = new FileStream(storagePath, FileMode.Create))
+                {
+                    await Image.CopyToAsync(fileStream);
+                }
+
+                product.Image = databaseFileName;
+            }
+
+            product.Date = DateTime.Now;
 
             // preluam id-ul utilizatorului care posteaza articolul
             product.UserId = _userManager.GetUserId(User);
