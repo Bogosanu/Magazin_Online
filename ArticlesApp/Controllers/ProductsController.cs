@@ -45,11 +45,8 @@ namespace ArticlesApp.Controllers
         // Pentru fiecare produs se afiseaza si userul care a postat produsul respectiv
         // HttpGet implicit
         [Authorize(Roles = "User,Collaborator,Admin")]
-
-
         public IActionResult Search(string searchQuery, string? order)
         {
-
 
             var products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery));
 

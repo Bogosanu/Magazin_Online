@@ -1,0 +1,37 @@
+﻿@model List<ArticlesApp.Models.Order>
+
+@{
+    ViewData["Title"] = "Orders List";
+}
+
+<h2>Orders List</h2>
+
+@if (ViewBag.Orders == null)
+{
+    <a class="btn btn-success rounded-pill mb-5" href="/Orders/New">
+        <i class="bi bi-plus"></i>Comandă acum.
+    </a>
+}
+
+
+<div class="row">
+    @if (ViewBag.Orders != null)
+    {
+        foreach (var order in ViewBag.Orders)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Order ID: @order.Id</h5>
+                        <p class="card-text">Order Date: @order.OrderDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                        <p class="card-text">User ID: @order.UserId</p>
+                        <p class="card-text">Address: @order.adresa</p>
+                        <p class="card-text">Delivery Method: @order.metodaLivrare</p>
+                        <p class="card-text">Payment Method: @order.metodaPlata</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>

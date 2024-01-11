@@ -84,6 +84,8 @@ namespace ArticlesApp.Controllers
         {
             SetAccessRights();
 
+            ViewBag.id = id;
+
             if (User.IsInRole("User") || User.IsInRole("Collaborator"))
             {
                 var baskets = db.Baskets

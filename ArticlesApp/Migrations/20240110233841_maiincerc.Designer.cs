@@ -4,6 +4,7 @@ using ArticlesApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArticlesApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240110233841_maiincerc")]
+    partial class maiincerc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,39 +133,6 @@ namespace ArticlesApp.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ArticlesApp.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("adresa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("metodaLivrare")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("metodaPlata")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("ArticlesApp.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -229,29 +199,6 @@ namespace ArticlesApp.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductBaskets");
-                });
-
-            modelBuilder.Entity("ArticlesApp.Models.ProductOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id", "ProductId", "OrderId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductOrders");
                 });
 
             modelBuilder.Entity("ArticlesApp.Models.Review", b =>
@@ -433,15 +380,6 @@ namespace ArticlesApp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ArticlesApp.Models.Order", b =>
-                {
-                    b.HasOne("ArticlesApp.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ArticlesApp.Models.Product", b =>
                 {
                     b.HasOne("ArticlesApp.Models.Category", "Category")
@@ -474,25 +412,6 @@ namespace ArticlesApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Basket");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("ArticlesApp.Models.ProductOrder", b =>
-                {
-                    b.HasOne("ArticlesApp.Models.Order", "Order")
-                        .WithMany("ProductOrders")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ArticlesApp.Models.Product", "Product")
-                        .WithMany("ProductOrders")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
@@ -583,16 +502,9 @@ namespace ArticlesApp.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("ArticlesApp.Models.Order", b =>
-                {
-                    b.Navigation("ProductOrders");
-                });
-
             modelBuilder.Entity("ArticlesApp.Models.Product", b =>
                 {
                     b.Navigation("ProductBaskets");
-
-                    b.Navigation("ProductOrders");
 
                     b.Navigation("Reviews");
                 });

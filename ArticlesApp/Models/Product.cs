@@ -48,6 +48,7 @@ namespace ArticlesApp.Models
 
         // relatia many-to-many dintre Product si Basket
         public virtual ICollection<ProductBasket>? ProductBaskets { get; set; }
+        public virtual ICollection<ProductOrder>? ProductOrders { get; set; }
     }
 
 }
