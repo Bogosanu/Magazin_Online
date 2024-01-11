@@ -1,5 +1,8 @@
-﻿using ArticlesApp.Models;
+﻿using ArticlesApp.Data;
+using ArticlesApp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace ArticlesApp.Controllers
@@ -8,13 +11,29 @@ namespace ArticlesApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext db;
+
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
         {
             _logger = logger;
+            db = context;
         }
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Products");
+            }
+            var products = db.Products.Include("Category").Include("User");
+            ViewBag.Products = products;
+
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.Message = TempData["message"];
+                ViewBag.Alert = TempData["messageType"];
+            }
+
             return View();
         }
 
