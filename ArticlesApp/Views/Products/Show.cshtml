@@ -14,13 +14,13 @@
 
 <div class="card">
 
-    @Html.Partial("ProductInfo", Model) 
+    @Html.Partial("ProductInfo_Show", Model) 
 
     @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
     {
         <div class="d-flex flex-row justify-content-between p-3 border-1 border-top">
 
-            <a class="btn btn-success" href="/Products/Edit/@Model.Id">Editeaza produs</a>
+            <a class="btn btn-warning" href="/Products/Edit/@Model.Id">Editeaza produs</a>
 
             <form method="post" action="/Products/Delete/@Model.Id">
 
@@ -30,27 +30,6 @@
 
         </div>
     }
-    @using System.Linq
-@{
-   var hasBaskets = ViewBag.UserBaskets != null && ViewBag.UserBaskets.Count > 0;
-   var firstBasketId = hasBaskets ? ViewBag.UserBaskets[0].Id : 0;
-}
-<form method="post" asp-controller="Products" asp-action="AddBasket">
-    <input type="hidden" name="ProductId" value="@Model.Id" />
-    @if (hasBaskets)
-    {
-        <input type="hidden" name="BasketId" value="@firstBasketId" />
-        <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
-            <input type="submit" class="btn btn-success alert-success" value="Adauga in cos" />
-        </div>
-    }
-    else
-    {
-        <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
-            <a href="@Url.Action("New", "Baskets")" class="btn btn-primary">Creeaza cosul de cumparaturi</a>
-        </div>
-    }
-</form>
 </div>
 
     
@@ -64,7 +43,7 @@
 
 @foreach (var rev in Model.Reviews)
 {
-    <div class="container">
+        <div class="container">
         <div class="row">
             <div class="col-md-2"></div>
 
@@ -171,7 +150,7 @@
 
                         <br /><br />
 
-                        <button class="btn btn-success " type="submit">Adauga review</button>
+                        <button class="btn btn-warning " type="submit">Adauga review</button>
 
                     </div>
 

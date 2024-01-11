@@ -35,7 +35,7 @@ namespace ArticlesApp.Controllers
 
 
         
-        [Authorize(Roles = "User,Collaborator,Admin")]
+        [Authorize(Roles = "User, Collaborator, Admin")]
         public IActionResult Index()
         {
             if (TempData.ContainsKey("message"))
@@ -61,7 +61,7 @@ namespace ArticlesApp.Controllers
             else
             if (User.IsInRole("Admin"))
             {
-                var orders = from order in db.Baskets
+                var orders = from order in db.Orders
                               select order;
 
                 ViewBag.Orders = orders;

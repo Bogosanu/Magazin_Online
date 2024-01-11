@@ -22,18 +22,18 @@
         <br /><br />
     </div>
 
-    @if(Model.ProductBaskets.Count > 0)
-    @foreach (var productBasket in Model.ProductBaskets)
+    @if (Model.ProductBaskets.Count > 0)
     {
-        <div class="col-12">
-            <div class="card" style="width: 100%;">
-            @*<img src="..." class="card-img-top" alt="..."> *@
-
-                <div class="card-body">
-
-                    @Html.Partial("ProductInfo", productBasket.Product)
-
-                </div>
+        <div class="container">
+            <div class="row">
+                @foreach (var productBasket in Model.ProductBaskets)
+                {
+                    <div class="col-md-4"> 
+                        <div class="card-body" style="width: 18rem;">
+                            @Html.Partial("ProductInfo_Display", productBasket.Product)
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     }

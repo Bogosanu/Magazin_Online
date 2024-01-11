@@ -8,6 +8,17 @@ html {
   }
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
+product-image {
+    height: 200px; 
+    background-size: cover;
+    background-position: center;
+}
+
 html {
   position: relative;
   min-height: 100%;
@@ -27,7 +38,7 @@ body {
 }
 
 .navbar {
-    background-color: #dfe6e9 !important;
+    background-color: #dfe6e !important;
     border: none !important;
     box-shadow: 0 3px 12px #636e72 !important;
 }
@@ -36,14 +47,14 @@ a.nav-link {
     color: #2c2c2c !important;
 }
 
-a.nav-link:hover {
-    color: #00b894 !important;
-}
+    a.nav-link:hover {
+        color: #f4c518 !important;
+    }
 
 .logoutbtn {
     color: #2c2c2c !important;
 }
 
-.logoutbtn:hover {
-    color: #00b894 !important;
-}
+    .logoutbtn:hover {
+        color: #f4c518 !important;
+    }

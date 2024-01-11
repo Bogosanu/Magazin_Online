@@ -33,8 +33,11 @@
                 "Selectati categoria", new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
                 <br /><br />
+                <label for="Photo">Select Photo:</label>
+                <input type="file" name="Image" id="Image"/>
+                <br /><br />
 
-                <button class="btn btn-sm btn-success" type="submit">Modifica produs</button>
+                <button class="btn btn-sm btn-warning" type="submit">Modifica produs</button>
 
            }
         </div>

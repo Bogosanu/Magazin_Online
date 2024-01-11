@@ -51,7 +51,9 @@ namespace ArticlesApp.Controllers
             var products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery));
 
 
-
+            ViewBag.UserBaskets = db.Baskets
+                                      .Where(b => b.UserId == _userManager.GetUserId(User))
+                                      .ToList();
             if (order == "asc")
             {
                 products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery)).OrderBy(p => p.pret);
@@ -80,7 +82,9 @@ namespace ArticlesApp.Controllers
         {
             var products = db.Products.Include("Category").Include("User");
 
-            // ViewBag.OriceDenumireSugestiva
+            ViewBag.UserBaskets = db.Baskets
+                                          .Where(b => b.UserId == _userManager.GetUserId(User))
+                                          .ToList();
             ViewBag.Products = products;
 
             if (TempData.ContainsKey("message"))
@@ -214,7 +218,7 @@ namespace ArticlesApp.Controllers
 
         // Se afiseaza formularul in care se vor completa datele unui articol
         // impreuna cu selectarea categoriei din care face parte
-        // Doar utilizatorii cu rolul de Editor sau Admin pot adauga articole in platforma
+        // Doar utilizatorii cu rolul de Collaborator sau Admin pot adauga articole in platforma
         // HttpGet implicit
 
         [Authorize(Roles = "Collaborator,Admin")]
@@ -296,6 +300,8 @@ namespace ArticlesApp.Controllers
 
             product.Categ = GetAllCategories();
 
+
+
             if (product.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
                 return View(product);
@@ -326,6 +332,7 @@ namespace ArticlesApp.Controllers
                     product.Title = requestProduct.Title;
                     product.Description = requestProduct.Description;
                     product.CategoryId = requestProduct.CategoryId;
+                    product.Image = requestProduct.Image;
                     TempData["message"] = "Produsul a fost modificat";
                     TempData["messageType"] = "alert-success";
                     db.SaveChanges();

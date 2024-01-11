@@ -32,28 +32,7 @@
     <h5 class="card-title"><a href="/Products/Show/@Model.Id">@Model.Title</a></h5>
     <p class="card-text">@Model.Description</p>
     <p>@Model.pret RON</p>
-        @{
-            var hasBaskets = ViewBag.UserBaskets != null && ViewBag.UserBaskets.Count > 0;
-            var firstBasketId = hasBaskets ? ViewBag.UserBaskets[0].Id : 0;
-        }
-<form method="post" asp-controller="Products" asp-action="AddBasket">
-    <input type="hidden" name="ProductId" value="@Model.Id" />
-            @if (hasBaskets)
-            {
-            <input type="hidden" name="BasketId" value="@firstBasketId" />
-            <div>
-                <input type="submit" class="btn btn-outline-warning" value="Adauga in cos" />
-            </div>
-            }
-            else
-            {
-            <div>
-                <a href="@Url.Action("New", "Baskets")" class="btn btn-primary">Creeaza cosul de cumparaturi</a>
-            </div>
-            }
-</form>
-
-
+      
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item"><i class="bi bi-globe"></i> @Model.Category.CategoryName</li>
