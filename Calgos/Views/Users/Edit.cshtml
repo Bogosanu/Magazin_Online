@@ -1,9 +1,8 @@
 ﻿@model Calgos.Models.ApplicationUser
 
 
-
 @using (Html.BeginForm(actionName: "Edit", controllerName: "Users",
-        method: FormMethod.Post, routeValues: new { id = @Model.Id }))
+        method: FormMethod.Post, routeValues: new { id = Model.Id }))
 {
 
     <i class="bi bi-person"></i>

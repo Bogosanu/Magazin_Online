@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,7 +16,7 @@ namespace Calgos.Models
         // un user poate posta mai multe articole
         public virtual ICollection<Product>? Products { get; set; }
 
-        
+        [BindNever]
         public virtual Basket Basket { get; set; }
 
         // atribute suplimentare adaugate pentru user

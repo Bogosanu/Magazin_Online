@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Security.Claims;
 
 namespace Calgos.Controllers
@@ -73,12 +74,17 @@ namespace Calgos.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(string id, ApplicationUser newData, [FromForm] string newRole)
         {
-            ApplicationUser user = db.Users.Find(id);
+            ApplicationUser user = db.Users.Include("Basket").Where(u => u.Id == id)
+                         .First();
 
             user.AllRoles = GetAllRoles();
 
+            if (ModelState.ContainsKey("Basket"))
+            {
+                ModelState.Remove("Basket");
+            }
 
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
                 {
                     user.UserName = newData.UserName;
                     user.Email = newData.Email;
@@ -92,9 +98,10 @@ namespace Calgos.Controllers
 
                     foreach (var role in roles)
                     {
-                        // Scoatem userul din rolurile anterioare
+                     // Scoatem userul din rolurile anterioare
                         await _userManager.RemoveFromRoleAsync(user, role.Name);
                     }
+
                 // Adaugam noul rol selectat
                     var roleName = await _roleManager.FindByIdAsync(newRole);
                     await _userManager.AddToRoleAsync(user, roleName.ToString());
