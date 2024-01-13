@@ -1,47 +1,6 @@
 ﻿@model Calgos.Models.Product
 
 
-<!--
-
-<div class="card" style="width: 100%;">
-  <img class="card-img-top" src="@Url.Content(Model.Image)" href="/Products/Show/@Model.Id" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title"><a href="/Products/Show/@Model.Id">@Model.Title</a></h5>
-    <p class="card-text">@Model.Description</p>
-    <p>@Model.pret RON</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item"><i class="bi bi-globe"></i> @Model.Category.CategoryName</li>
-    <li class="list-group-item"><i class="bi bi-person"></i> @Model.User.UserName</li>
-    <li class="list-group-item">@Model.Date</li>
-  </ul>
-</div>
--->
-
-<!--
-<div class="card-body">
-
-    <h3 class="card-title alert-success py-3 px-3 rounded-2">@Model.Title</h3>
-
-    <div class="card-text">@Model.Description</div>
-
-    <p>@Model.pret RON</p>
-
-     <p>Rating: @Model.Rating/5 stele</p>
-
-    <div class="d-flex justify-content-between flex-row mt-5">
-
-        <div><i class="bi bi-globe"></i> @Model.Category.CategoryName</div>
-
-        <div><i class="bi bi-person"></i> @Model.User.UserName</div>
-
-        <span class="alert-success">@Model.Date</span>
-
-        <img src="@Url.Content(Model.Image)" width = 300px ></img>
-    </div>
-
-</div>-->
-
 <div class="card border-0" style="width: 100%;">
   <div class="row no-gutters">
   <div class="col-md-8">
@@ -51,13 +10,14 @@
   </div>
   <div class="col-md-4">
     <div class="card-body"
-    <br /> <br /> <br /> <br /> <br />
-    <div>
-      <span>Rating: @Model.Rating/5 stele</span>
-    </div>
+    <br /> <br /> <br /> 
+    <div class="card_pret">
+    <span>Rating: @Model.Rating/5 stars</span>
     <p>
-      <span>@Model.pret RON</span>
+        <span>@Model.pret RON</span>
     </p>
+</div>
+<br /> <br />
     <ul class="list-group list-group-flush">
       <li class="list-group-item">@Model.Description</li>
       <li class="list-group-item"><i class="bi bi-globe"></i> @Model.Category.CategoryName</li>

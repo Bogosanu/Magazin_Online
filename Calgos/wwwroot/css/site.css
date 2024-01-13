@@ -58,3 +58,12 @@ a.nav-link {
     .logoutbtn:hover {
         color: #f4c518 !important;
     }
+
+.card_pret {
+    background-color: gold; 
+    color: black; 
+    padding: 5px; 
+    width: fit-content; 
+    margin-left: 15px; 
+    border-radius: 5px; 
+}

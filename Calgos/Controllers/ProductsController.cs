@@ -48,7 +48,7 @@ namespace Calgos.Controllers
         public IActionResult Search(string searchQuery, string? order)
         {
 
-            var products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery));
+            var products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery) || p.Category.CategoryName.Contains(searchQuery));
 
 
             ViewBag.UserBaskets = db.Baskets
@@ -56,12 +56,12 @@ namespace Calgos.Controllers
                                       .ToList();
             if (order == "asc")
             {
-                products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery)).OrderBy(p => p.pret);
+                products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery) || p.Category.CategoryName.Contains(searchQuery)).OrderBy(p => p.pret);
             }
 
             if (order == "desc")
             {
-                products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery)).OrderByDescending(p => p.pret);
+                products = db.Products.Include("Category").Include("User").Where(p => p.Title.Contains(searchQuery) || p.Category.CategoryName.Contains(searchQuery)).OrderByDescending(p => p.pret);
             }
 
             ViewBag.Products = products;
@@ -268,7 +268,7 @@ namespace Calgos.Controllers
             {
                 db.Products.Add(product);
                 db.SaveChanges();
-                TempData["message"] = "Produsul a fost adaugat";
+                TempData["message"] = "Produsul asteapta aprobare";
                 TempData["messageType"] = "alert-success";
                 return RedirectToAction("Index");
             }
