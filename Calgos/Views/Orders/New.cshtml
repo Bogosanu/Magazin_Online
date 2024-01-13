@@ -10,25 +10,37 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @Html.LabelFor(model => model.adresa, htmlAttributes: new { @class = "control-label" })
+        @Html.Label("adresa", "Adresa de livrare")
         @Html.EditorFor(model => model.adresa, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.adresa, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.metodaLivrare, htmlAttributes: new { @class = "control-label" })
-        @Html.EditorFor(model => model.metodaLivrare, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.metodaLivrare, "", new { @class = "text-danger" })
-    </div>
+    <label>Metoda de livrare</label>
+    @Html.DropDownListFor(model => model.metodaLivrare, 
+                                    new SelectList(
+                                    new List<SelectListItem> 
+                                     { 
+                                        new SelectListItem { Text = "Curier", Value = "Curier" },
+                                        new SelectListItem { Text = "Easybox", Value = "Easybox" },
+                                     }, "Value", "Text"),
+                                    "Selectati o optiune",
+                                    new { @class = "form-control" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.metodaPlata, htmlAttributes: new { @class = "control-label" })
-        @Html.EditorFor(model => model.metodaPlata, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.metodaPlata, "", new { @class = "text-danger" })
-    </div>
+   
+     <label>Metoda de plata</label>
+     @Html.DropDownListFor(model => model.metodaPlata, 
+                                    new SelectList(
+                                    new List<SelectListItem> 
+                                     { 
+                                        new SelectListItem { Text = "Ramburs", Value = "Ramburs" }
+                                     }, "Value", "Text"),
+                                    "Selectati o optiune",
+                                    new { @class = "form-control" })
 
+    <br />
+    <br />
     <div class="form-group">
-        <input type="submit" value="New" class="btn btn-primary" />
+        <input type="submit" value="Plasati comanda" class="btn btn-warning" />
     </div>
 }
 
