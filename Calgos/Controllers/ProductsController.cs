@@ -16,7 +16,7 @@ namespace Calgos.Controllers
     public class ProductsController : Controller
     {
 
-        // PASUL 10 - useri si roluri
+        
 
 
         private readonly ApplicationDbContext db;
@@ -40,10 +40,7 @@ namespace Calgos.Controllers
             _env = env;
         }
 
-        // Se afiseaza lista tuturor produselor impreuna cu categoria 
-        // din care fac parte
-        // Pentru fiecare produs se afiseaza si userul care a postat produsul respectiv
-        // HttpGet implicit
+        
         [Authorize(Roles = "User,Collaborator,Admin")]
         public IActionResult Search(string searchQuery, string? order)
         {

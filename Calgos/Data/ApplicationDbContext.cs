@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Migrations;
 
 
-// PASUL 3 - useri si roluri
+
 
 namespace Calgos.Data
 {
