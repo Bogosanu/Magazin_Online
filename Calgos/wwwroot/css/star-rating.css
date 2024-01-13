@@ -1,0 +1,27 @@
+﻿.star-rating {
+    font-size: 0; 
+}
+
+    .star-rating .star {
+        font-size: 30px; 
+        color: gold; 
+        cursor: pointer;
+        display: inline-block;
+      
+    }
+
+    .star-rating .star_unclickable {
+        font-size: 30px; 
+        color: gold; 
+        cursor: pointer;
+        display: inline-block;
+
+    }
+
+        .star-rating .star.rated {
+            color: gold; 
+        }
+
+        
+
+

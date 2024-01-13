@@ -1,0 +1,41 @@
+﻿@model Calgos.Models.Basket
+
+<div class="row">
+
+    <div class="col-12">
+        <h5 class="card-title" name="Name">"Cosul meu"</h5>
+        @if (ViewBag.EsteAdmin)
+        {
+            <i class="bi bi-person"> Creat de: </i> @Model.User.UserName
+
+        }
+
+        <div class="mb-5">
+            <a class="btn btn-primary rounded-pill" href="/Orders/New">
+                <i class="bi bi-plus"></i> Creeaza comanda noua
+            </a>
+        </div>
+        
+        <br />
+        <br />
+        Produse in cos:
+        <br /><br />
+    </div>
+
+    @if (Model.ProductBaskets.Count > 0)
+    {
+        <div class="container">
+            <div class="row">
+                @foreach (var productBasket in Model.ProductBaskets)
+                {
+                    <div class="col-md-4"> 
+                        <div class="card-body" style="width: 18rem;">
+                            @Html.Partial("ProductInfo_Display", productBasket.Product)
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</div>
