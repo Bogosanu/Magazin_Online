@@ -27,6 +27,8 @@ namespace Calgos.Models
 
         public string? Image { get; set; }
 
+        public bool Approved { get; set; }
+
 
         [Required(ErrorMessage = "Categoria este obligatorie")]
  

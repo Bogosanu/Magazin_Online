@@ -4,6 +4,35 @@
 }
 <br />
 
+
+@if (ViewBag.esteAdmin)
+{
+
+    @if (ViewBag.showUnapprovedProducts)
+    {
+        <h2 class="text-center">Produse care asteapta aprobarea: </h2>
+
+        <br />
+
+
+        <div class="container">
+            <div class="row">
+                @foreach (Calgos.Models.Product product in ViewBag.unapprovedProducts)
+                {
+                    <div class="col-md-4">
+                        <div class="card" style="width: 18rem;">
+
+                            @Html.Partial("ProductInfo_Display", product)
+                            <a href="/products/approve/@product.Id"><button>aprobă produsul</button></a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+
+
 <h2 class="text-center">Produse disponibile: </h2>
 
 <br />
@@ -17,9 +46,10 @@
 
 <br />
 
+
 <div class="container">
     <div class="row">
-        @foreach (Calgos.Models.Product product in ViewBag.Products)
+        @foreach (Calgos.Models.Product product in ViewBag.approvedProducts)
         {
                 <div class="col-md-4"> 
                     <div class="card" style="width: 18rem;">

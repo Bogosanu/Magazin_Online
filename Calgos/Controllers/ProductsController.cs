@@ -80,12 +80,16 @@ namespace Calgos.Controllers
 
         public IActionResult Index()
         {
-            var products = db.Products.Include("Category").Include("User");
+            var approvedProducts = db.Products.Where(p => p.Approved).Include("Category").Include("User");
+            var unapprovedProducts = db.Products.Where(p => !p.Approved).Include("Category").Include("User");
 
             ViewBag.UserBaskets = db.Baskets
                                           .Where(b => b.UserId == _userManager.GetUserId(User))
                                           .ToList();
-            ViewBag.Products = products;
+            ViewBag.approvedProducts = approvedProducts;
+            ViewBag.unapprovedProducts = unapprovedProducts;
+
+            ViewBag.showUnapprovedProducts = unapprovedProducts.Count() > 0;
 
             if (TempData.ContainsKey("message"))
             {
@@ -93,10 +97,13 @@ namespace Calgos.Controllers
                 ViewBag.Alert = TempData["messageType"];
             }
 
+
+            SetAccessRights();
+
             return View();
         }
 
-      
+
 
         [Authorize(Roles = "User,Collaborator,Admin")]
         public IActionResult Show(int id)
@@ -252,7 +259,7 @@ namespace Calgos.Controllers
             }
 
             product.Date = DateTime.Now;
-
+            product.Approved = false;
        
             product.UserId = _userManager.GetUserId(User);
             product.Rating = 0;
@@ -272,7 +279,19 @@ namespace Calgos.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
 
+        public IActionResult Approve(int id)
+        {
+            Product product = db.Products.Include("Category")
+                                        .Where(prod => prod.Id == id)
+                                        .First();
+
+            product.Approved = true;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
         
 
         [Authorize(Roles = "Collaborator,Admin")]
