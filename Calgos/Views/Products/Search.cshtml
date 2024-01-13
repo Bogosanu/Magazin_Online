@@ -26,18 +26,18 @@
     <div class="row">
         @foreach (Calgos.Models.Product product in ViewBag.Products)
         {
-                    <div class="col-md-4"> 
-                        <div class="card" style="width: 18rem;">
+            <div class="col-md-3 mb-4">
+                <div class="card" style="width: 18rem; border-radius: 15px;">
                     @Html.Partial("ProductInfo", product)
-                        </div>
-                    </div>
+                </div>
+            </div>
         }
     </div>
 </div>
 
 @if (order == "asc")
 {
-    <button type="submit" form="sortForm" class="btn btn-warning">Sort by Price (Desc)</button>
+    <button type="submit" form="sortForm" class="btn btn-warning misto">Sort by Price (Desc)</button>
 
     <form id="sortForm" method="get" action="@Url.Action("Search", "Products")">
         <input type="hidden" name="searchQuery" value="@searchQuery" />
@@ -46,7 +46,7 @@
 }
 else
 {
-    <button type="submit" form="sortForm" class="btn btn-warning">Sort by Price (Asc)</button>
+    <button type="submit" form="sortForm" class="btn btn-warning misto">Sort by Price (Asc)</button>
 
     <form id="sortForm" method="get" action="@Url.Action("Search", "Products")">
         <input type="hidden" name="searchQuery" value="@searchQuery" />

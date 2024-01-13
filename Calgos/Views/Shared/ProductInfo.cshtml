@@ -2,39 +2,49 @@
 
 
 
+<div class="card" style="width: 18rem; border-radius:15px; border-width:1px; border-color: #684d5e !important" ;>
+    
+    <div class="card-body">
 
-<div class="card border-warning mb-3" style="width: 18rem; border-width: 2px">
-  <img class="card-img-top" src="@Url.Content(Model.Image)" href="/Products/Show/@Model.Id" alt="Card image cap" style="height: 200px;">
-  <div class="card-body">
-    <h5 class="card-title"><a href="/Products/Show/@Model.Id">@Model.Title</a></h5>
-    <p class="card-text">@Model.Description</p>
-    <p>@Model.pret RON</p>
-        @{
-            var hasBaskets = ViewBag.UserBaskets != null && ViewBag.UserBaskets.Count > 0;
-            var firstBasketId = hasBaskets ? ViewBag.UserBaskets[0].Id : 0;
-        }
-<form method="post" asp-controller="Products" asp-action="AddBasket">
-    <input type="hidden" name="ProductId" value="@Model.Id" />
-            @if (hasBaskets)
-            {
-            <input type="hidden" name="BasketId" value="@firstBasketId" />
-            <div>
-                <input type="submit" class="btn btn-outline-warning" value="Adauga in cos" />
-            </div>
+        <img class="card-img-top" src="@Url.Content(Model.Image)" href="/Products/Show/@Model.Id" alt="Card image cap" style="height: 200px;">
+
+    </div>
+
+    <div class="card-body">
+        
+        <h5 class="card-title"><a href="/Products/Show/@Model.Id">@Model.Title</a></h5>
+        <p class="card-text">@Model.Description</p>
+        <p style="font-family: 'Roboto', sans-serif; font-size: 28px; font-weight: bold; color: #b7091d; display: inline;">@Model.pret</p>
+        <p style="font-family: 'Roboto', sans-serif; font-size: 20px; font-weight: bold; color: #b7091d; display: inline;"> lei</p>
+
+
+        
+            @{
+                var hasBaskets = ViewBag.UserBaskets != null && ViewBag.UserBaskets.Count > 0;
+                var firstBasketId = hasBaskets ? ViewBag.UserBaskets[0].Id : 0;
             }
-            else
-            {
-            <div>
-                <a href="@Url.Action("New", "Baskets")" class="btn btn-primary">Creeaza cosul de cumparaturi</a>
-            </div>
-            }
-</form>
+
+            <form method="post" asp-controller="Products" asp-action="AddBasket">
+                
+                <input type="hidden" name="ProductId" value="@Model.Id" />
+                        
+                @if (hasBaskets)
+                        {
+                            <input type="hidden" name="BasketId" value="@firstBasketId" />
+                            <div>
+                             <input type="submit" class="btn btn-outline-warning" value="Adauga in cos" style=" width: 100%; color: white; border-radius: 3px; border-color:white;background-color: #b7091d; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#e293a1'" onmouseout="this.style.backgroundColor='#b7091d'" />
+                            </div>
+                        }
+                else
+                        {
+                            <div>
+                                <a href="@Url.Action("New", "Baskets")" class="btn btn-primary">Creeaza cosul de cumparaturi</a>
+                            </div>
+                        }
+            </form>
 
 
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item"><i class="bi bi-globe"></i> @Model.Category.CategoryName</li>
-    <li class="list-group-item"><i class="bi bi-person"></i> @Model.User.UserName</li>
-    <li class="list-group-item">@Model.Date</li>
-  </ul>
+    </div>
+  
+    
 </div>

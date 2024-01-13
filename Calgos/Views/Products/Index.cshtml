@@ -19,11 +19,9 @@
             <div class="row">
                 @foreach (Calgos.Models.Product product in ViewBag.unapprovedProducts)
                 {
-                    <div class="col-md-4">
-                        <div class="card" style="width: 18rem;">
-
-                            @Html.Partial("ProductInfo_Display", product)
-                            <a href="/products/approve/@product.Id"><button>aprobă produsul</button></a>
+                    <div class="col-md-3 mb-4">
+                        <div class="card" style="width: 18rem; border-radius: 15px;">
+                            @Html.Partial("unapprovedProductInfo", product)
                         </div>
                     </div>
                 }
@@ -51,13 +49,18 @@
     <div class="row">
         @foreach (Calgos.Models.Product product in ViewBag.approvedProducts)
         {
-                <div class="col-md-4"> 
-                    <div class="card" style="width: 18rem;">
+            <div class="col-md-3 mb-4">
+                <div class="card" style="width: 18rem; border-radius: 15px;">
                     @Html.Partial("ProductInfo", product)
-                    </div>
                 </div>
+            </div>
         }
     </div>
 </div>
 
 
+<style>
+    .card:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adjust the values as needed */
+    }
+</style>

@@ -10,35 +10,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="~/Calgos.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap">
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-3b3f88 border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Products" asp-action="Index">Calgos</a>
+
+                <a href = "Products/Index">
+                <img class="navbar-brand" src="/images/logo.png" style="height: 100px;">
+                </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="font-family: 'Nunito', sans-serif; font-size: 16px;">
 
                     <ul class="navbar-nav flex-grow-1">
 
-                        <li class="nav-item">
-                            
-                             
-
-                            
+                        <li class="nav-item">                                                                                 
                             @using (Html.BeginForm("Search", "Products", FormMethod.Get, new { id = "searchForm" }))
                             {
                                 <div>
-                                    <label for="searchQuery">Search:</label>
-                                    <input type="text" id="searchQuery" name="searchQuery" />
-                                    <button type="submit">Search</button>
+                                    <input type="text" id="searchQuery" name="searchQuery" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; transition: border-color 0.3s ease;" />
+                                    <button type="submit" style="background-color: #f4acb7; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#e08192'" onmouseout="this.style.backgroundColor='#f4acb7'">Search</button>
                                 </div>
-                            }
-                            
-
+                            }                         
                         </li>
 
                         @if (User.IsInRole("Admin"))
