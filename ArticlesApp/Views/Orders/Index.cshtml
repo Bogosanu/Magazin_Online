@@ -22,7 +22,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Order ID: @order.Id</h5>
+                        <h5 class="card-title"><a href="@Url.Action("Show", "Orders", new { id = order.Id })">Order ID: @order.Id  </a></h5>
                         <p class="card-text">Order Date: @order.OrderDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
                          @if(User.IsInRole("Admin"))
                          {

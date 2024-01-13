@@ -74,7 +74,31 @@ namespace ArticlesApp.Controllers
                 return RedirectToAction("Index", "Products");
             }
         }
-        
+
+
+        public IActionResult Show(int id)
+        {
+            string userid = _userManager.GetUserId(User);
+
+            Order order = db.Orders.Where( od => od.Id == id).First();
+
+            if (User.IsInRole("Admin") || order.UserId == userid)
+            {
+                var productOrders = db.ProductOrders.Where(po => po.OrderId == order.Id).ToList();
+
+                List<int> productIdList = productOrders.Select(po => po.ProductId ?? 0).ToList();
+
+                List<Product> products = db.Products
+                                            .Where(p => productIdList.Contains(p.Id)).ToList();
+
+                ViewBag.products = products;
+
+                return View(order);
+            }
+            else
+                return RedirectToAction("Index");
+        }
+
 
         [HttpGet]
         public IActionResult New()
@@ -105,7 +129,7 @@ namespace ArticlesApp.Controllers
                 db.SaveChanges();
                 // transferam produsele de la cos la comanda
 
-                List<ProductBasket> productsInBasket = db.ProductBaskets.Include(pb => pb.Basket)
+                var productsInBasket = db.ProductBaskets.Include(pb => pb.Basket)
                                                                         .Where(pb => pb.Basket.UserId == order.UserId)
                                                                         .ToList();
 
@@ -119,8 +143,10 @@ namespace ArticlesApp.Controllers
                         ProductId = productInBasket.ProductId // Assuming ProductId is the foreign key in ProductOrder referencing Product
                     };
 
+                    Console.WriteLine(productOrder.OrderId + " " + productOrder.ProductId + "\n");
+
                     db.ProductOrders.Add(productOrder);
-                   
+                    db.SaveChanges();
                 }
                 
                 db.ProductBaskets.RemoveRange(productsInBasket);

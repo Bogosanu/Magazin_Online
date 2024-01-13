@@ -1,0 +1,59 @@
+﻿@model ArticlesApp.Models.Order
+
+<h2>Order Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+
+        <!-- Add similar sections for other properties -->
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adresa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.adresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.metodaLivrare)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.metodaLivrare)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.metodaPlata)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.metodaPlata)
+        </dd>
+
+        <!-- Add more sections as needed -->
+
+        @if (ViewBag.products.Count > 0)
+        {
+            <div class="container">
+                <div class="row">
+                    @foreach (ArticlesApp.Models.Product product in ViewBag.products)
+                    {
+
+                        <div class="card border-warning mb-3" style="width: 18rem; border-width: 2px">
+                            <img class="card-img-top" src="@Url.Content(product.Image)" href="/Products/Show/@product.Id" alt="Card image cap" style="height: 200px;">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="/Products/Show/@product.Id">@product.Title</a></h5>
+                                <p class="card-text">@product.Description</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        } 
+
+    </dl>
+</div>
